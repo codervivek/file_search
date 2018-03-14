@@ -8,6 +8,7 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import *
 from collections import Counter
 
+
 class Folder:
 
     def __init__(self, path):
@@ -17,9 +18,14 @@ class Folder:
     def openEveryFiles(self):
         idx = InvertedIndex()
         dlt = DocumentLengthTable()
+        files = dict()
         for filename in os.listdir(self.path):
             file = File(self.path+"/"+filename)
             file.indexFile(idx, dlt)
+        database = {"dirPath":self.path,"dirModifyTime":os.path.getmtime(self.path),
+                    "invertedIndex":idx.index,"documentLengthTable":dlt.table}
+        with open("index.json",'w') as indexFile:
+            json.dump(database,indexFile,indent=4,sort_keys=True)
         return idx, dlt
 
 class File:
@@ -55,23 +61,26 @@ class File:
         dlt.add(self.name, self.length)
 
     def get_document_length(self):
-        with open(self.path, 'r') as f:
-            return len(re.findall(r'\w+', f.read().lower()))
+        with open(self.path, 'rb') as f:
+            # i=i+1
+            print("Indexing file: "+self.name)
+            return len(re.findall(r'\w+', f.read().decode("utf8")))
 
 
     def getUsefulWords(self):
-        with open(self.path, 'r') as f:
+        with open(self.path, 'rb') as f:
             stop = set(stopwords.words('english'))
             stemmer = PorterStemmer()
-            words = re.findall(r'\w+', f.read().lower())
+            contents = f.read().decode("utf8")
+            words = re.findall(r'\w+', contents.lower())
             useful_words = [i for i in words if i not in stop]
             stemmed_words = [stemmer.stem(word) for word in useful_words]
             return stemmed_words
         
 class InvertedIndex:
 
-	def __init__(self):
-		self.index = dict()
+	def __init__(self, index=dict()):
+		self.index = index
 
 	def __contains__(self, item):
 		return item in self.index
@@ -110,8 +119,8 @@ class InvertedIndex:
 
 class DocumentLengthTable:
 
-	def __init__(self):
-		self.table = dict()
+	def __init__(self, table=dict()):
+		self.table = table
 
 	def __len__(self):
 		return len(self.table)
