@@ -30,10 +30,7 @@ class QueryProcessor:
     def run(self):
         results = []
         for query in self.queries:
-            words = query.split()
-            stemmer = PorterStemmer()
-            stemmed_words = [stemmer.stem(word) for word in words]
-            results.append(self.run_query(stemmed_words))
+            results.append(self.run_query(query))
         # pp.pprint(results)
         return results
 
@@ -44,10 +41,11 @@ class QueryProcessor:
                 doc_dict = self.index[term] # retrieve index entry
                 for docid, freq in doc_dict.items(): #for each document and its word frequency
                     doc_len = len(doc_dict)
-                    score = score_BM25(n=doc_len, f=freq, qf=1, r=0, N=len(self.dlt),
+                    score = score_BM25(n=doc_len, f=freq[0], qf=1, r=0, N=len(self.dlt),
                                        dl=self.dlt.get_length(docid), avdl=self.dlt.get_average_length()) # calculate score
                     if docid in query_result: #this document has already been scored once
                         query_result[docid][0] += score
+                        query_result[docid][1].append((freq,self.dlt.table[docid]))
                     else:
-                        query_result[docid] = [score, freq, self.dlt.table[docid]]
+                        query_result[docid] = [score, [(freq, self.dlt.table[docid])]]
         return query_result
