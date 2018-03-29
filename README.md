@@ -1,6 +1,7 @@
 # File Search
 
-A python app which enables us to search through files of a folder using techniques similar to advanced search engines and information retrieval.
+A python app which enables us to search through files of a folder using techniques similar to advanced search engines and information retrieval.  
+The project uses [Okapi BM25](https://en.wikipedia.org/wiki/Okapi_BM25) algorithm, [inverted index](https://en.wikipedia.org/wiki/Inverted_index) data structure, [stemming](https://en.wikipedia.org/wiki/Stemming), removing [stopwords](https://en.wikipedia.org/wiki/Stop_words) and [caching](https://en.wikipedia.org/wiki/Cache_(computing)) to make the search as fast as possible.
 
 
 ## Getting Started
