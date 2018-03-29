@@ -27,7 +27,7 @@ cd ~/virtualenvironment/my_new_app/bin
 source activate
 ```
 
-To install django.
+To install dependencies.
 
 ```
 sudo pip3 install -r requirements.txt
