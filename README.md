@@ -49,6 +49,6 @@ python3 main.py
 
 ## Authors
 
-* **Vivek Raj**  - [Deep Player](https://github.com/codervivek/deep_player)
+* **Vivek Raj**  - [File Search](https://github.com/codervivek/file_search)
 * **[Rohit Pant](https://github.com/rpant1728)**
 * **[Kapil Goyal](https://github.com/kapil-goyal)**
