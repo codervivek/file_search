@@ -49,6 +49,6 @@ python3 main.py
 
 ## Authors
 
-* **Vivek Raj**  - [File Search](https://github.com/codervivek/file_search)
+* **Vivek Raj  - [File Search](https://github.com/codervivek/file_search)**
 * **[Rohit Pant](https://github.com/rpant1728)**
 * **[Kapil Goyal](https://github.com/kapil-goyal)**
